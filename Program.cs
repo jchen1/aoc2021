@@ -1,3 +1,3 @@
 ﻿using aoc2021;
 
-Day3.Part2();
+Day4.Part2();
