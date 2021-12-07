@@ -2,7 +2,7 @@ namespace aoc2021;
 
 using System.Linq;
 
-public class Day4
+public static class Day4
 {
     private struct BingoNumber
     {

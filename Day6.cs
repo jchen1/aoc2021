@@ -1,6 +1,6 @@
 namespace aoc2021;
 
-public class Day6
+public static class Day6
 {
     private static List<int> ReadInput()
     {

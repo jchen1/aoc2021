@@ -15,14 +15,20 @@ public static class Day7
 
     public static void Part2()
     {
-        var mean = (int) Math.Floor(Crabs.Average());
+        var mean = Crabs.Average();
 
-        var diff = Crabs.Select(c =>
+        var floorDiff = Crabs.Select(c =>
         {
-            var d = Math.Abs(c - mean);
+            var d = Math.Abs(c - Math.Floor(mean));
             return (d * (d + 1)) / 2;
         }).Sum();
 
-        Console.WriteLine(diff);
+        var ceilDiff = Crabs.Select(c =>
+        {
+            var d = Math.Abs(c - Math.Ceiling(mean));
+            return (d * (d + 1)) / 2;
+        }).Sum();
+
+        Console.WriteLine(Math.Min(floorDiff, ceilDiff));
     }
 }
