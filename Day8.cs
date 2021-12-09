@@ -15,7 +15,7 @@ public static class Day8
                 );
             })
         .ToList();
-    
+
     public static void Part1()
     {
         var counts = new[] {2, 4, 3, 7}; // 1, 4, 7, 8
