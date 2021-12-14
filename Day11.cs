@@ -1,8 +1,7 @@
 namespace aoc2021;
 
-public class Day11
+public static class Day11
 {
-
     private static readonly int InputSize = 10;
 
     private static int[,] GetInput()

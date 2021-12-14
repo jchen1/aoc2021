@@ -1,6 +1,6 @@
 namespace aoc2021;
 
-public class Day12
+public static class Day12
 {
     private class Graph
     {

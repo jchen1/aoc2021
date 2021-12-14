@@ -1,6 +1,6 @@
 namespace aoc2021;
 
-public class Day13
+public static class Day13
 {
     private enum Direction
     {
