@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace aoc2021;
 
 public static class Day14
