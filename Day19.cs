@@ -30,6 +30,11 @@ public static class Day19
 
     private readonly record struct Point(int X, int Y, int Z) : IComparable
     {
+        public Point(string line) :
+            this(int.Parse(line.Split(",")[0]), int.Parse(line.Split(",")[1]),
+            int.Parse(line.Split(",")[2]))
+        { }
+
         public static Point operator +(Point a, Point b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         public static Point operator -(Point a, Point b) => new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 
@@ -70,19 +75,15 @@ public static class Day19
             throw new ArgumentException();
         }
     }
-    private static Point ParseLine(string line)
-    {
-        return new Point(int.Parse(line.Split(",")[0]), int.Parse(line.Split(",")[1]), int.Parse(line.Split(",")[2]));
-    }
 
     private static readonly Dictionary<int, List<Point>> ScannerPositions = File.ReadAllText("inputs/day19.txt")
         .Split("\n\n")
-        .Select((scanner, i) => (i, scanner.Split("\n").Where(s => !string.IsNullOrEmpty(s)).Skip(1).Select(ParseLine).ToList()))
+        .Select((scanner, i) => (i, scanner.Split("\n").Where(s => !string.IsNullOrEmpty(s)).Skip(1).Select(l => new Point(l)).ToList()))
         .ToDictionary(kv => kv.i, kv => kv.Item2);
 
     private static bool TryAlign(List<Point> beacons, List<Point> other, out (List<Point> offsets, Point scannerPosition) result)
     {
-        var set = new HashSet<Point>(beacons);
+        var beaconSet = new HashSet<Point>(beacons);
         for (var xAngle = 0; xAngle < 360; xAngle += 90)
         {
             for (var yAngle = 0; yAngle < 360; yAngle += 90)
@@ -96,8 +97,8 @@ public static class Day19
                         foreach (var candidatePoint in rotated)
                         {
                             var candidateTranslation = point - candidatePoint;
-                            var translatedOther = rotated.Select(point => Point.Translate(point, candidateTranslation)).ToHashSet();
-                            if (translatedOther.Intersect(set).Count() >= 12)
+                            var translatedOther = rotated.Select(p => p + candidateTranslation).ToHashSet();
+                            if (translatedOther.Intersect(beaconSet).Count() >= 12)
                             {
                                 result = (translatedOther.ToList(), candidateTranslation);
                                 return true;
@@ -133,6 +134,8 @@ public static class Day19
                 }
             }
         }
+
+        Debug.Assert(seen.Count == ScannerPositions.Count);
 
         return (seen.Values.ToList(), positions);
     }
