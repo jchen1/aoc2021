@@ -131,7 +131,7 @@ public static class Day20
         {
             output = Enhance(output, i);
         }
-        
+
         Console.WriteLine(output.Count);
     }
 }
